@@ -6,9 +6,9 @@ import authRoute from "./routes/auth.js";
 import hotelRoute from "./routes/Hotel.js";
 import roomRoute from "./routes/room.js";
 import usersRoute from "./routes/users.js";
+import cors from "cors"
 import cookieParser from "cookie-parser";
 dotenv.config();
-var cors = require('cors')
 
 
 
