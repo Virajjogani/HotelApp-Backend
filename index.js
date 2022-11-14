@@ -8,6 +8,9 @@ import roomRoute from "./routes/room.js";
 import usersRoute from "./routes/users.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
+var cors = require('cors')
+
+
 
 const connect = async () => {
   try {
@@ -23,6 +26,7 @@ mongoose.connection.on("disconnected", () => {
 });
 
 //middleware
+app.use(cors())
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoute);
