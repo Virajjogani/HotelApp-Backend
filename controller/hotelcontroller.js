@@ -30,7 +30,7 @@ export const DeleteHotel = async (req, res, next) => {
 };
 export const GetallHotels = async (req, res, next) => {
   try {
-    const hotels = await Hotel.find();
+    const hotels = await Hotel.find(req.query).limit(req.query.limit);
     res.status(200).send({ hotels, status: 200 });
   } catch {
     next();
@@ -63,14 +63,14 @@ export const CountBytype = async (req, res, next) => {
     const apartmentCount = await Hotel.countDocuments({ type: "Apartment" });
     const resortCount = await Hotel.countDocuments({ type: "Resort" });
     const villasCount = await Hotel.countDocuments({ type: "Villas" });
-    const cabinsCount = await Hotel.countDocuments({ type: "Cabin" });
+    const cabinCount = await Hotel.countDocuments({ type: "Cabin" });
 
     res.status(200).send([
       { type: "Hotel", count: hotelCount },
       { type: "Apartment", count: apartmentCount },
       { type: "Resort", count: resortCount },
       { type: "Villas", count: villasCount },
-      { type: "Cabin", count: cabinsCount }
+      { type: "Cabin", count: cabinCount }
     ])
   } catch {
     next();
