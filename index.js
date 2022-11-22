@@ -33,6 +33,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/hotel", hotelRoute);
 app.use("/api/room", roomRoute);
 app.use("/api/users", usersRoute);
+app.use("/image", express.static("uploads"));
+
+
+
 
 app.use((err, req, res, next) => {
   const errorstatus = err.status || 500;
