@@ -34,6 +34,7 @@ app.use("/api/hotel", hotelRoute);
 app.use("/api/room", roomRoute);
 app.use("/api/users", usersRoute);
 app.use("/image", express.static("uploads"));
+app.set("view engine", "ejs");
 
 
 

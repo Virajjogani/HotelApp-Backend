@@ -1,8 +1,19 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import nodemailer from 'nodemailer'
+import ejs from "ejs";
+import path from "path";
+
 
 export const register = async (req, res, next) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "vjo.globaliasoft@gmail.com",
+      pass: "oooleqplwjzfbkbw",
+    },
+  });
   try {
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(req.body.password, salt);
@@ -12,14 +23,36 @@ export const register = async (req, res, next) => {
       email: req.body.email,
       password: hash
     });
+
     await newUser.save();
-    res.status(200).send({
-      msg: "User Created successfully",
-      status: 200
+
+    const data = await ejs.renderFile(
+      path.join("__dirname", "../views/EmailTemplate.ejs"),
+      { name: req.body.username }
+    );
+    const mailOptions = {
+      from: "vjo.globaliasoft@gmail.com",
+      to: req.body.email,
+      subject: "Welcome to Booking.com",
+      html: data,
+    };
+
+    transporter.sendMail(mailOptions, function (err, data) {
+      if (err) {
+        console.log('Error Occurs');
+      } else {
+        console.log('Email sent successfully');
+      }
+      res.status(200).send({
+        msg: "User Created successfully",
+        status: 200
+      });
     });
+
   } catch (error) {
     next(error);
   }
+
 };
 
 export const login = async (req, res, next) => {
