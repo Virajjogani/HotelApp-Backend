@@ -11,8 +11,8 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 
-
-const connect = async () => {
+  
+const connect = async () => { 
   try {
     await mongoose.connect(process.env.MONGO);
     console.log("Connected to mongoDB successfully");
